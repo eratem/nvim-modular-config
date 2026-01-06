@@ -17,10 +17,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -29,7 +29,7 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<C-S-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -51,4 +51,30 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Directory dropout
+vim.keymap.set('n', '<leader>dn', vim.cmd.Ex, { desc = '[d]irectory [n]avigation' })
+
+-- Move line ergonomics
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected stuff down' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selected stuff up' })
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'append line below but keep cursor' })
+
+-- Centerd Jumps
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'move page down and center cursor' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'move page up and center cursor' })
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'jump to next search match, center and highlight line' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'jump to previous search match, center and highlight line' })
+
+-- Register free deletion
+vim.keymap.set('x', '<leader>p', [[_dP]], { desc = 'paste over selection, keep register' })
+vim.keymap.set('n', '<leader>x', [["_d]], { desc = 'Delete without writing to Register' })
+vim.keymap.set('v', '<leader>x', [["_d]], { desc = 'Delete without writing to Register' })
+
+-- Move vertical into wrapped lines
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Keep visual selection on indent shift
+vim.keymap.set('v', '<', '<gv', { desc = 'indent left, keep selection' })
+vim.keymap.set('v', '>', '>gv', { desc = 'indent right, keep selection' })
 -- vim: ts=2 sts=2 sw=2 et

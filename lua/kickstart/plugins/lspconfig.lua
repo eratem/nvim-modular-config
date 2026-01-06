@@ -208,10 +208,22 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        pylsp = {
+          jedy = { environment = './venv/' },
+          ruff = {
+            enabled = true,
+            extendSelect = { 'I', 'B' },
+            format = { 'I' },
+            lineLength = 88,
+          },
+          mypy = { enabled = true },
+          pycodestyle = { maxLineLength = 88 },
+          yapf = { enabled = false },
+          autopep8 = { enabled = false },
+        },
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -253,6 +265,14 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'hadolint', -- docker
+        'vale', -- rst and text
+        'ruff', -- python linting and formatting
+        'mypy', -- python static type checking
+        'ormolu', -- haskell formatter
+        'hlint', -- haskell linter
+        'hls', -- haskell lsp
+        'clang-format', -- formatting for C/C++, Json
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
