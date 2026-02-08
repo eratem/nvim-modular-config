@@ -210,18 +210,15 @@ return {
       local servers = {
         clangd = {},
         -- gopls = {},
-        pylsp = {
-          jedy = { environment = './venv/' },
-          ruff = {
-            enabled = true,
-            extendSelect = { 'I', 'B' },
-            format = { 'I' },
-            lineLength = 88,
+        zuban = {
+          lint = {
+            enable = true,
           },
-          mypy = { enabled = true },
-          pycodestyle = { maxLineLength = 88 },
-          yapf = { enabled = false },
-          autopep8 = { enabled = false },
+          formatting = {
+            provider = 'ruff',
+          },
+          type_checking = { strict = true },
+          useDaemon = true,
         },
         rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -268,7 +265,6 @@ return {
         'hadolint', -- docker
         'vale', -- rst and text
         'ruff', -- python linting and formatting
-        'mypy', -- python static type checking
         'ormolu', -- haskell formatter
         'hlint', -- haskell linter
         'hls', -- haskell lsp
