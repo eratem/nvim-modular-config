@@ -229,7 +229,8 @@ return {
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
-
+        hls = {},
+        marksman = {}, -- markdown
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -259,18 +260,7 @@ return {
       --
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-        'hadolint', -- docker
-        'vale', -- rst and text
-        'ruff', -- python linting and formatting
-        'ormolu', -- haskell formatter
-        'hlint', -- haskell linter
-        'hls', -- haskell lsp
-        'clang-format', -- formatting for C/C++, Json
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      require('mason-tool-installer').setup { ensure_installed = vim.tbl_keys(servers) }
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
